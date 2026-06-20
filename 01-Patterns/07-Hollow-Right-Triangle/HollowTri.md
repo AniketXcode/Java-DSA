@@ -13,8 +13,8 @@ Print a hollow right-angled triangle made of `*` characters, with `n` rows, wher
 ```
 *
 * *
-*  *
 *   *
+*     *
 * * * * *
 ```
 
