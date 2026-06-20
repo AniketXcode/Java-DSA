@@ -1,6 +1,6 @@
 public class HollowTri {
     public static void main(String[] args) {
-        int n = 5;
+        int n = 4;
 
         for (int row = 1; row <= n; row++) {
             if (row == 1 || row == n || row == 2) {
