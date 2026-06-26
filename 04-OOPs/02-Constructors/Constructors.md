@@ -1,27 +1,37 @@
-# Constructors — Introduction to Constructors in Java
+# Default & Parameterized Constructors
 
-A simple Java program demonstrating the concept of a **constructor** — a special method that is automatically called when an object is created. This is part of the OOP section under Data Structures & Algorithms practice.
+A Java program demonstrating the difference between a **default constructor** and a **parameterized constructor**, and how both are used to initialise object fields. This is part of the OOP section under Data Structures & Algorithms practice.
 
 ---
 
 ## 📌 Problem Statement
 
-Define a class with a constructor that prints a message, then create an object of that class and observe the constructor being called automatically.
+Create a class with two fields (`name`, `age`), define both a default and a parameterized constructor to initialise them, and use a `display()` method to print the values for objects created using each constructor.
 
 **Expected Output:**
 ```
-This is a constructor.
+Name: Unknown
+Age: 0
+
+Name: Aniket
+Age: 22
 ```
 
 ---
 
 ## 💡 Approach
 
-1. **Define a constructor** — `public Constructors()` is a special method with the **same name as the class** and **no return type** (not even `void`). It is automatically invoked by the JVM every time a new object of the class is created.
+1. **Declare instance fields** — `String name` and `int age` are declared at the class level (outside any method), making them **instance variables** that belong to each object individually.
 
-2. **Create an object** — `new Constructors()` allocates memory on the heap for a new object. As part of this process, the JVM automatically calls the constructor — no explicit method call is needed.
+2. **Default Constructor** — `Constructors()` takes no arguments and sets `name = "Unknown"` and `age = 0`. This provides safe fallback values when no data is supplied at the time of object creation.
 
-3. **Observe the output** — the `System.out.println` inside the constructor runs immediately upon object creation, proving that the constructor was invoked automatically.
+3. **Parameterized Constructor** — `Constructors(String n, int a)` accepts values at the time of object creation and assigns them to the instance fields. This allows each object to be initialised with custom data.
+
+4. **`display()` method** — an instance method that reads and prints the current object's `name` and `age` fields. Since it's an instance method, each call prints the data of whichever object it's called on.
+
+5. **Two objects created:**
+   - `obj1` → uses the default constructor → fields are `"Unknown"` and `0`
+   - `obj2` → uses the parameterized constructor → fields are `"Aniket"` and `22`
 
 ---
 
@@ -30,13 +40,25 @@ This is a constructor.
 ```
 START
   DEFINE class Constructors:
-      CONSTRUCTOR Constructors():
-          PRINT "This is a constructor."
+      FIELDS: name, age
+
+      DEFAULT CONSTRUCTOR():
+          name = "Unknown"
+          age  = 0
+
+      PARAMETERIZED CONSTRUCTOR(n, a):
+          name = n
+          age  = a
+
+      METHOD display():
+          PRINT name, age
 
   BEGIN main():
-      CREATE object obj of type Constructors
-          → constructor is automatically invoked
-          → PRINT "This is a constructor."
+      CREATE obj1 using DEFAULT CONSTRUCTOR
+      CALL obj1.display()     → "Unknown", 0
+
+      CREATE obj2 using PARAMETERIZED CONSTRUCTOR("Aniket", 22)
+      CALL obj2.display()     → "Aniket", 22
 END
 ```
 
@@ -47,45 +69,61 @@ END
 ```java
 public class Constructors {
 
-    // Constructor
-    public Constructors() {
-        System.out.println("This is a constructor.");
+    String name;
+    int age;
+
+    // Default Constructor
+    Constructors() {
+        name = "Unknown";
+        age  = 0;
+    }
+
+    // Parameterized Constructor
+    Constructors(String n, int a) {
+        name = n;
+        age  = a;
+    }
+
+    // Display Method
+    void display() {
+        System.out.println("Name: " + name);
+        System.out.println("Age: " + age);
     }
 
     public static void main(String[] args) {
 
-        // Create an object — constructor is called automatically
-        Constructors obj = new Constructors();
+        // Calling Default Constructor
+        Constructors obj1 = new Constructors();
+        obj1.display();
+
+        System.out.println();
+
+        // Calling Parameterized Constructor
+        Constructors obj2 = new Constructors("Aniket", 22);
+        obj2.display();
     }
 }
 ```
 
 ---
 
-## 🔍 Execution Flow
+## 🔍 Dry Run — Object Creation & Field State
 
-```
-JVM starts
-    │
-    ▼
-main() is called
-    │
-    ▼
-new Constructors()
-    │
-    ├── Memory allocated on heap
-    │
-    └── Constructor Constructors() is AUTO-INVOKED
-            │
-            ▼
-        "This is a constructor." is printed
-            │
-            ▼
-        Object fully created → reference stored in obj
-    │
-    ▼
-Program ends
-```
+**`obj1` — Default Constructor:**
+
+| Step | Action | `name` | `age` |
+|------|--------|--------|-------|
+| 1 | `new Constructors()` called | — | — |
+| 2 | Default constructor executes | `"Unknown"` | `0` |
+| 3 | `obj1.display()` called | prints `"Unknown"` | prints `0` |
+
+**`obj2` — Parameterized Constructor:**
+
+| Step | Action | `name` | `age` |
+|------|--------|--------|-------|
+| 1 | `new Constructors("Aniket", 22)` called | — | — |
+| 2 | Parameterized constructor executes | `"Aniket"` | `22` |
+| 3 | `obj2.display()` called | prints `"Aniket"` | prints `22` |
 
 ---
 
@@ -93,56 +131,42 @@ Program ends
 
 | Concept | Detail |
 |---------|--------|
-| **Constructor name** | Must exactly match the class name (case-sensitive) |
-| **No return type** | Constructors have no return type — not even `void` |
-| **Auto-invoked** | Called automatically by `new` — you never call a constructor directly |
-| **Default constructor** | If no constructor is defined, Java provides a hidden no-arg constructor that does nothing |
-| **Purpose** | Used to initialise object fields or run setup logic when the object is created |
+| **Instance variables** | `name` and `age` are declared at class level — each object gets its own separate copy |
+| **Constructor overloading** | Defining multiple constructors with different parameter lists in the same class |
+| **Default constructor** | No-arg constructor; sets default/fallback values for fields |
+| **Parameterized constructor** | Accepts arguments; enables custom initialisation per object |
+| **`this` keyword (best practice)** | Using `this.name = name` instead of `name = n` makes the code more readable when parameter names match field names |
 
 ---
 
-## 📌 Types of Constructors in Java
+## ⚠️ Default vs Parameterized — Key Differences
 
-| Type | Description | Example |
-|------|-------------|---------|
-| **Default / No-arg** | Takes no parameters; provided by Java if none is defined | `Constructors()` |
-| **Parameterised** | Takes arguments to initialise fields with custom values | `Constructors(String name)` |
-| **Copy Constructor** | Takes another object of the same class to copy its values | `Constructors(Constructors other)` |
-
----
-
-## ⚠️ Constructor vs Method — Key Differences
-
-| Feature | Constructor | Method |
-|---------|------------|--------|
-| **Name** | Same as class name | Any valid identifier |
-| **Return type** | None (not even `void`) | Must have a return type |
-| **When called** | Automatically on `new` | Explicitly by programmer |
-| **Purpose** | Initialise the object | Perform an action |
-| **Inheritance** | Not inherited | Inherited by subclasses |
+| Feature | Default Constructor | Parameterized Constructor |
+|---------|--------------------|--------------------------| 
+| **Parameters** | None | One or more |
+| **Use case** | When default/placeholder values are sufficient | When the object needs custom data at creation |
+| **Example call** | `new Constructors()` | `new Constructors("Aniket", 22)` |
+| **Auto-provided by Java?** | ✅ Yes (if no constructor defined) | ❌ No — must be written explicitly |
 
 ---
 
-## ⚡ Extended Example — Parameterised Constructor
+## ⚡ Best Practice — Using `this` Keyword
 
 ```java
-public class Constructors {
-    String name;
+// Current approach (parameter names differ from field names)
+Constructors(String n, int a) {
+    name = n;
+    age  = a;
+}
 
-    // Parameterised constructor
-    public Constructors(String name) {
-        this.name = name;
-        System.out.println("Object created for: " + name);
-    }
-
-    public static void main(String[] args) {
-        Constructors obj = new Constructors("Aniket");
-        // Output: Object created for: Aniket
-    }
+// Best practice (parameter names match field names — more readable)
+Constructors(String name, int age) {
+    this.name = name;   // this.name → instance field; name → parameter
+    this.age  = age;
 }
 ```
 
-The `this.name = name` inside the constructor initialises the object's `name` field with the value passed during object creation.
+`this` refers to the **current object**, distinguishing instance fields from local parameters when they share the same name.
 
 ---
 
@@ -150,7 +174,7 @@ The `this.name = name` inside the constructor initialises the object's `name` fi
 
 | Complexity | Value | Explanation |
 |------------|-------|-------------|
-| **Time Complexity** | `O(1)` | Object creation and constructor execution both take constant time; a single print statement is executed. |
-| **Space Complexity** | `O(1)` | One object reference (`obj`) is stored on the stack; the object itself occupies fixed memory on the heap. |
+| **Time Complexity** | `O(1)` | Object creation, field initialisation, and `display()` all execute in constant time. |
+| **Space Complexity** | `O(1)` | Two objects (`obj1`, `obj2`) are created, each holding a fixed number of fields — space does not grow with input. |
 
 ---
