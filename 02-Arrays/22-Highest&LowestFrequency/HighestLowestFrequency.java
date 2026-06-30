@@ -28,6 +28,7 @@ public class HighestLowestFrequency {
         System.out.println("Lowest Frequency: " + lowestFreq + " for number: " + lowestNum);
     }
     public static void main(String[] args) {
-        
+        int[] arr = {1, 2, 3, 2, 4, 2, 5};
+        highestLowestFrequency(arr);
     }
 }
