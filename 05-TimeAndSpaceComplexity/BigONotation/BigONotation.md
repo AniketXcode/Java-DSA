@@ -181,27 +181,3 @@ for (int i = 0; i < arr.length; i++) {
 > A solution that works for `n = 100` but fails for `n = 1,000,000` is not a good solution in production.
 
 ---
-
-## 📂 Folder Structure
-
-```
-Java-DSA/
-└── 05-Algorithm-Fundamentals/
-    └── 01-Big-O-Notation/
-        ├── BigONotation.java
-        └── BigONotation.md
-```
-
----
-
-## 🚀 How to Run
-
-```bash
-javac BigONotation.java
-java BigONotation
-```
-
----
-
-## 🏷️ Tags
-`Java` `DSA` `Big O Notation` `Time Complexity` `Space Complexity` `Algorithm Analysis` `Interview Prep` `Beginner`
